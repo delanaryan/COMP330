@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+\title{COMP330-A1}
+\author{Delana Ryan}
+\date{January 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Question 1}
+Give state diagrams of DFAs that recognize the following languages over the alphabet {0,1}:\newline
+a. $\{w \mid w\text{ ends in 10}\}$\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{No l accept-1.png}
+    \caption{Q1 a)}
+    \label{fig:placeholder}
+\end{figure}\newpage
+b. $\{w\mid \text{the second to last symbol of w is 0}\}$(i.e. 010101 is accepted and 11010 is not accepted)\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Scanned Documents.pdf}
+    \caption{Enter Caption}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+c. $\{w\mid w \text{ contains at most one 1 and at least two 0s}\}$\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{No l accept-3.png}
+    \caption{Q1 c)}
+    \label{fig:placeholder}
+\end{figure}\newpage
+d. $\emptyset \text{ (the empty set)}$\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{No l accept-4.png}
+    \caption{Q1 d)}
+    \label{fig:placeholder}
+\end{figure}\newpage
+e. $\{w|w \neq \epsilon\}$(recall that $\epsilon$ is the empty string)\newline
+Note that by giving DFAs for these languages, you have shown that they are regular.\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{No l accept-5.png}
+    \caption{Q1 e)}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+
+\section{Question 2}
+
+a. Show that if M is a DFA that recognizes language B, swapping the accept and non-accept
+states in M yields a new DFA recognizing the complement of B. Conclude that the class of
+regular languages is closed under complement. [10 points]
+\newline
+\indent Let $M$ be a DFA recognizing language $B$. Suppose $M'$ is its complement, a DFA where accept states of $M$ become rejection states of $M'$, and rejection states of $M$ become accept states of $M'$. \newline
+$M=(S, \Sigma, \delta, s_0, F), M' = (S, \Sigma, \delta, s_0, F')$, where $F' $ is all $s\in S, s\notin F$. \newline
+Consider some string $w$. $M$ accepts $w \iff w \in F.$ \newline
+Similarly, $M'$ rejects $w \iff w \in F$. \newline$M' \text{ accepts } w \implies w \in F'$ \newline
+Since $F' = s\in S \wedge s \notin F, w$ cannot be in the set $F.$\newline
+So, $w \in B\iff w  \notin B'$ and vice versa. 
+\newline Hence, regular languages are closed under complement. 
+
+\newpage
+b. Each of the languages below is the complement of a more straightforward language over
+the alphabet {a,b}. For each of them, begin by constructing the DFA of the complement
+language, then use it to give the state diagram of a DFA for the given language. [10 points]\newline
+\indent i. $\{w \mid w \text{ contains neither the substrings aba nor bab}\}$\newline
+Let $M'$ represent the compliment DFA, and $M$ represent the solution.\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Scanned Documents (dragged).pdf}
+    \caption{Q2 b) i.}
+    \label{fig:placeholder}
+\end{figure}
+\newline
+\indent ii. $\{w|w \text{ is any string that doesn’t contain exactly two b’s}\}$ 
+\newline
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Scanned Documents (dragged) 2.pdf}
+    \caption{Q2 b) ii.}
+    \label{fig:placeholder}
+\end{figure}
+\newline \newpage
+c. Show by giving an example that if M is an NFA that recognizes language C, swapping the
+accept and non-accept states in M doesn’t necessarily yield a new NFA that recognizes the
+complement of C. Is the class of languages recognized by NFAs closed under complement?
+Explain your answer. [10 points] \newline
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{().pdf}
+    \caption{Q2 C) Example}
+    \label{fig:placeholder}
+\end{figure}
+\indent Let the NFA $M$ contain $\Sigma = \{0,1\}, S = \{s_0, s_1\}$ with accept states $\in F$, as shown above. Note that its reversed accept and non-accept states are denoted as the NFA $M'$, with accept states $\in F'$ \newline
+Consider the string $ w = 1. \newline 
+w \in F$ and $w \in F'$. So, by counter-example languages recognized by NFAs are not closed under compliment. 
+\newpage
+\section{Question 3}
+a. Give a DFA accepting the following language over the alphabet {0, 1}[4 points]: \newline
+$\{w|w \text{ contains } 001 \text{ or } 011\}$
+\newline Solution:
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{a) EwW 001 OR GI15.pdf}
+    \caption{Q3 a)}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+b. Show that any DFA for recognizing this language must have at least 5 states. [16 points]
+\newline Solution above. \newline 
+\indent Consider a minimal DFA $M$, containing only the requirements to accept the language $\{w|w \text{ contains } 001 \text{ or } 011\}$. Let $M$ have $4$ states. 
+\newline To contain the substring 001 or 011, the DFA must know if: the substring is at least 3 characters long, the substring starts with 0, and the substring ends with 1.
+\newline Let $s_0$ represent the start state of the string. $s_0$ can be left once the start of the substring, 0, is found. 
+\newline To ensure the substring is at least 3 characters long, clearly 3 states are required. 
+\newline In the optimal case, the evaluated substring matches 001 or 011, so let $ M = s_0 \rightarrow_0 s_1 \rightarrow_{0,1} s_2 \rightarrow_1 s_3$. 
+\newline Let $M$ evaluate the substring 010. At $s_2,$ the substring cannot move to the goal state $\rightarrow_1 s_3$, it has 3 states remaining to transition to: \newline
+\indent Case 1:$s_2 \rightarrow_0 s_0$ in this case, the string 01001 would not reach the goal state, $s_0 \rightarrow_0 s_1 \rightarrow_1 s_2 \rightarrow_0 s_0 \rightarrow_0 s_1 \rightarrow_1 s_2$, despite having the substring 001. \newline
+\indent Case 2: $s_2 \rightarrow_0 s_1$. Counter-example 0001. This string follows the transitions $s_0 \rightarrow_0 s_1 \rightarrow_0 s_2 \rightarrow_0 s_1 \rightarrow_1 s_2$, rejecting 0001 despite having a valid substring. \newline
+\indent Case 3: $s_2 \rightarrow_0 s_2$. The string 0101 follows the path $s_0 \rightarrow_0 s_1 \rightarrow_1 s_2 \rightarrow_0s_2 \rightarrow_1 s_3$ and is accepted despite not being in the language. \newline
+Since, all cases end in contradiction, the $M$ cannot be represented as a DFA by 4 states. Any additional removal of states results in a further loss of information, proving $M$ cannot be represented by less than 5 states. 
+\newline 
+\newpage 
+\section{Question 4}
+Convert (using the method seen in class and Theorem 1.39 of Sipser) the
+following NFA to an equivalent DFA. Include all steps. \newline
+\begin{figure}
+    \centering
+    \includegraphics[width=0.75\linewidth]{q4.pdf}
+    \caption{Q4}
+    \label{fig:placeholder}
+\end{figure}
+\newpage
+\section{Question 5}
+For any string $w= w_1w_2 ...w_n$, the reverse of $w$, written $w^R$, is the string
+$w$ in reverse order, $w = w_n ...w_2w_1$. For any language A, let $A^R = \{w^R|w \in A\}$. Show that if $A$ is regular, so is $A^R$.\newline
+\indent $A$ regular \implies $\exists$ DFA $M = (S, \Sigma, \delta, s_0, F)$. \newline
+Consider some DFA $M^R$ that recognizes the language $A^R.$
+\newline Define $M^R$ by the set of states $S$, and the alphabet $\Sigma$.
+\newline Let $M^R$'s start states be the accept states of $M$, and the accept states of $M^R$ be the start states of $M.$ Let $\delta^R$ be the reverse transitions of $\delta$ (i.e. $\delta(s_0,s_1) = \delta(s_1, s_0)$). \newline
+So, $M^R = (S, \Sigma, \delta^R, F, s_0)$ accepts the reverse of strings accepted by $M$, $w^R.$ Since a language is regular iff it can be accepted by a DFA, $A^R$ is regular.
+\newpage
+\section{Question 6}
+Given $k\geq1$, consider the language $A_k$ over the alphabet $\{a,b\}$:
+$A_k = \{w|w$ contains an a which is exactly $k$ places from the end$\}$
+Given any $k$, give the formal description of an NFA with $k+ 1$ states for $A_k$.
+\newline
+\indent Let $M_k$ be an NFA. $M_k = (S, \Sigma, s_0, \delta, s_k)$, where $S=\{s_0, s_1,..,s_k\}, \Sigma = \{a,b\}$ and $\delta$ is given by the following transitions: \newline
+\indent 1. $s_0 \rightarrow_{a,b}s_0, s_0 \rightarrow_{a}s_1$ \newline
+\indent 2. $s_i, 1\leq i <k \rightarrow_{a,b} s_{i+1}$ \newline
+\indent 3. $s_k$ \newline
+$M_k$ checks to see if the character is an a, non-deterministically, and then counts the remaining characters. So, $M_k$ has $k+1$ states and accepts the language $A_k$.
+\end{document}
