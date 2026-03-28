@@ -1,0 +1,72 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath}
+
+\title{COMP330-A5}
+\author{Delana Ryan}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Q1}
+Let $A_{\in CFG} = \{\langle G \rangle|\text{ G is a CFG that generates } \epsilon\}$. Show that $A_{\in CFG} $is decidable (computable). \newline
+\indent \textbf{Sol:}
+To decide $A_{\epsilon \in CFG}$,  we determine if the start symbol $S$ is nullable:
+1. Initialize a set $N$ containing all variables $A$ with a rule $A \to \epsilon$.
+2. Repeat until no new variables are added to $N$:
+    \begin{itemize}
+        \item If $B \to C_1C_2...C_k$ is a rule and all $C_i \in N$, add $B$ to $N$.
+    \end{itemize}
+3. If $S \in N$, accept. Otherwise, reject. \newline
+Since the number of variables is finite, the algorithm must halt, thus the language is decidable.
+
+\newpage
+\section{Q2}
+Let $A = \{\langle R, S \rangle|R \text{ and } S \text{ are regular expressions and } L(R) \subseteq L(S)\}$. Show that A is decidable (computable). \newline
+\indent \textbf{Sol:} \newline
+Note that $L(R) \subseteq L(S) \iff L(R) \cap \overline{L(S)} = \emptyset$.
+Convert $R$ and $S$ into DFAs $M_R$ and $M_S$.
+Construct a DFA $M'$ that recognizes the language $L(M_R) \cap \overline{L(M_S)}$ using standard closure constructions for complement and intersection.
+Run the decider for $E_{DFA}$ (emptiness test) on $M'$. 
+If $E_{DFA}$ accepts (meaning the intersection is empty), accept. Otherwise, reject.
+
+\newpage
+\section{Q3}
+ Prove that there exists a subset of $\{1\}^*$ that is undecidable (uncomputable) \newline
+ \indent \textbf{Sol:}
+The set of all Turing Machines is countable because each TM has a finite description, so the set of all decidable languages is also countable.
+Also, the set of all subsets of $\{1\}^*$ is the power set $\mathcal{P}(\{1\}^*)$. Since $\{1\}^*$ is countably infinite, its power set is uncountably infinite.
+Since there are uncountably many subsets but only countably many deciders, there must exist subsets of $\{1\}^*$ that no TM can decide.
+
+\newpage 
+\section{Q4}
+Show that any language $A$ is Turing-recognizable (CE) iff $A \leq _m A_{TM}$ (i.e.
+$A$ is mapping reducible to $A_{TM}$). \newline
+\indent \textbf{Sol:}
+$(\Rightarrow)$ If $A$ is recognizable, there exists a TM $M_A$ that recognizes it. Define the reduction $f(w) = \langle M_A, w \rangle$. Then $w \in A \iff \langle M_A, w \rangle \in A_{TM}$. Since $f$ is computable, $A \leq_m A_{TM}$. \newline
+$(\Leftarrow)$ If $A \leq_m A_{TM}$, there exists a computable function $f$ such that $w \in A \iff f(w) \in A_{TM}$. To recognize $A$, on input $w$, compute $f(w)$ and simulate the universal TM on $f(w)$. If it accepts, \textbf{accept}.
+
+\newpage
+\section{Q5}
+Show that any language A is decidable (computable) iff $A \leq_m 0^*1^*$. \newline
+\indent \textbf{Sol: }
+$(\Rightarrow)$ If $A$ is decidable, let $M_D$ be its decider. Define $f(w)$: Run $M_D$ on $w$. If it accepts, output $01$. If it rejects, output $10$. Since $01 \in 0^*1^*$ and $10 \notin 0^*1^*$, and $M_D$ always halts, $f$ is a valid reduction. \newline
+$(\Leftarrow)$ If $A \leq_m 0^*1^*$, there is a computable $f$ such that $w \in A \iff f(w) \in 0^*1^*$. Since $0^*1^*$ is a regular language, it is decidable. To decide $A$, compute $f(w)$ and check if it belongs to $0^*1^*$.
+
+\newpage
+\section{Q6}
+Consider language X: \newline
+$X = \{\langle M, w\rangle |M \text{ is a single-tape TM that never modifies the potion of the tape that contains the input } w\}$
+Show that X is undecidable (uncomputable). (Hint: Reduce $A_{TM}$ to $X$) \newline
+\indent \textbf{Sol:}
+Assume $X$ is decided by $D_X$. We construct a decider for $A_{TM}$: \newline
+On input $\langle M, w \rangle$:
+Construct $M'$: On input $x$, $M'$ first shifts $x$ to the right to create a "buffer" and uses a special marker. It simulates $M$ on $x$. If $M$ is about to accept, $M'$ moves back to the original input area and modifies a symbol.
+Run $D_X$ on $\langle M', w \rangle$.
+If $D_X$ rejects, then $M'$ modified the input, which means $M$ accepted $w$. So, accept.
+If $D_X$ accepts, then $M'$ never modified the input, meaning $M$ never accepted $w$. So, reject. \newline
+This contradicts the undecidability of $A_{TM}$, so $X$ is undecidable.
+
+\end{document}
